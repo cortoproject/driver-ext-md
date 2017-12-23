@@ -1,0 +1,9 @@
+{
+    "id": "driver/ext/md",
+    "type": "package",
+    "value": {
+        "author": "Johnny Lee, Sander Mertens",
+        "description": "Markdown parser for corto document framework",
+        "version": "1.0.0"
+    }
+}

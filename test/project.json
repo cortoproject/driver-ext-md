@@ -1,0 +1,8 @@
+{
+    "id": "test",
+    "type": "package",
+    "value": {
+        "use": ["corto/test", "driver/ext/md"],
+        "public": false
+    }
+}
