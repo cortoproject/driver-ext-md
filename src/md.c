@@ -63,7 +63,7 @@ int md_parseDoc(corto_string file, int argc, char* argv[], void *data) {
 
     source = corto_file_load(file);
     if (source) {
-        corto_object doc = corto_voidCreateChild(root_o, "doc");
+        corto_object doc = corto_void__create(root_o, "doc");
         md_parseToCorto(doc, source);
         corto_dealloc(source);
     } else {

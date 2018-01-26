@@ -120,7 +120,7 @@ void md_callbackHeader(hoedown_buffer *ob, const hoedown_buffer *content, int le
         }
         *bptr = '\0';
 
-        doc = md_Doc_create(previous, id, o, level, name);
+        doc = md_Doc__create(previous, id, o, level, name);
 
         _data->headers[level] = doc;
     } else {
