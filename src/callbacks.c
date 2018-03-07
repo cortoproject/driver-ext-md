@@ -32,10 +32,23 @@ static void md_appendBuffer(
     }
 
     if (lastHeader) {
+        bool description = true;
+        char *dot = strchr(buff, '.');
+        if (dot && strchr(dot + 1, '.')) {
+            /* If text contains multiple sentences, it's not a description */
+            description = false;
+        }
+
+        if (description && strlen(buff) > 100) {
+            /* If text is longer than 100 characters, it is not a description */
+            description = false;
+        }
+
         if (code || lastHeader->description ||
             lastHeader->text ||
             strchr(buff, '`') ||
-            strstr(buff, "!["))
+            strstr(buff, "![") ||
+            !description)
         {
             if (code) {
                 if (lastHeader->text) {
