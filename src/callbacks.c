@@ -4,7 +4,8 @@
 
 #define MAX_OBJECT_HEADER (6)
 
-static void md_appendBuffer(
+static
+void md_appendBuffer(
     const hoedown_buffer *content,
     const hoedown_buffer *lang_content,
     const hoedown_renderer_data *data,
@@ -32,24 +33,27 @@ static void md_appendBuffer(
     }
 
     if (lastHeader) {
-        bool description = true;
-        char *dot = strchr(buff, '.');
-        if (dot && strchr(dot + 1, '.')) {
-            /* If text contains multiple sentences, it's not a description */
-            description = false;
+        bool description = false;
+
+        if (buff[0] == '[') {
+            if (buff[strlen(buff) - 1] == ']') {
+                description = true;
+            }
         }
 
-        if (description && strlen(buff) > 100) {
-            /* If text is longer than 100 characters, it is not a description */
-            description = false;
+        if (description && lastHeader->description) {
+            corto_error("header already has a description");
         }
 
-        if (code || lastHeader->description ||
-            lastHeader->text ||
-            strchr(buff, '`') ||
-            strstr(buff, "![") ||
-            !description)
-        {
+        if (description && lastHeader->text) {
+            corto_warning("should not add description after regular text");
+        }
+
+        if (code && description) {
+            corto_warning("should not add code tags to description");
+        }
+
+        if (!description) {
             if (code) {
                 if (lastHeader->text) {
                     str = corto_asprintf("%s\n```%s\n%s```\n", lastHeader->text, lang, buff);
@@ -65,7 +69,8 @@ static void md_appendBuffer(
             }
             corto_set_str(&lastHeader->text, str);
         } else {
-            str = corto_asprintf("%s\n", buff);
+            buff[strlen(buff) - 1] = '\0';
+            str = corto_asprintf("%s\n", buff + 1);
             corto_set_str(&lastHeader->description, str);
         }
     }
@@ -75,7 +80,12 @@ static void md_appendBuffer(
     corto_dealloc(lang);
 }
 
-void md_callbackBlockcode(hoedown_buffer *ob, const hoedown_buffer *text, const hoedown_buffer *lang, const hoedown_renderer_data *data) {
+void md_callbackBlockcode(
+    hoedown_buffer *ob,
+    const hoedown_buffer *text,
+    const hoedown_buffer *lang,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     CORTO_UNUSED(text);
     CORTO_UNUSED(lang);
