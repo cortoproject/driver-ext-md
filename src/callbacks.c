@@ -96,13 +96,22 @@ void md_callbackBlockcode(
     }
 }
 
-void md_callbackBlockquote(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackBlockquote(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     CORTO_UNUSED(content);
     CORTO_UNUSED(data);
 }
 
-void md_callbackHeader(hoedown_buffer *ob, const hoedown_buffer *content, int level, const hoedown_renderer_data *data) {
+void md_callbackHeader(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    int level,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     corto_id name;
     md_parseData* _data = data->opaque;
@@ -135,6 +144,8 @@ void md_callbackHeader(hoedown_buffer *ob, const hoedown_buffer *content, int le
                 ptr++;
             } else if (ch == '/') {
                 *bptr = '_';
+            } else if (ch == '.') {
+                *bptr = '_';
             } else if (ch == ' ') {
                 *bptr = '_';
             } else {
@@ -153,29 +164,54 @@ error:
     return;
 }
 
-void md_callbackHrule(hoedown_buffer *ob, const hoedown_renderer_data *data) {
+void md_callbackHrule(
+    hoedown_buffer *ob,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     CORTO_UNUSED(data);
 }
 
-void md_callbackList(hoedown_buffer *ob, const hoedown_buffer *content, hoedown_list_flags flags, const hoedown_renderer_data *data) {
+void md_callbackList(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    hoedown_list_flags flags,
+    const hoedown_renderer_data *data)
+{
     md_appendBuffer(content, NULL, data, 0);
 }
 
-void md_callbackListitem(hoedown_buffer *ob, const hoedown_buffer *content, hoedown_list_flags flags, const hoedown_renderer_data *data) {
+void md_callbackListitem(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    hoedown_list_flags flags,
+    const hoedown_renderer_data *data)
+{
     hoedown_buffer_puts(ob, " - ");
     hoedown_buffer_put(ob, content->data, content->size);
 }
 
-void md_callbackParagraph(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackParagraph(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     md_appendBuffer(content, NULL, data, 0);
 }
 
-void md_callbackTable(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackTable(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     md_appendBuffer(content, NULL, data, 0);
 }
 
-void md_callbackTable_header(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackTable_header(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     md_parseData* _data = data->opaque;
     hoedown_buffer_put(ob, content->data, content->size);
     int i; for (i = 0; i < _data->cellCount - 1; i++) {
@@ -184,21 +220,34 @@ void md_callbackTable_header(hoedown_buffer *ob, const hoedown_buffer *content, 
     hoedown_buffer_puts(ob, "---\n");
 }
 
-void md_callbackTable_body(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackTable_body(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     CORTO_UNUSED(content);
     CORTO_UNUSED(data);
     hoedown_buffer_put(ob, content->data, content->size);
 }
 
-void md_callbackTable_row(hoedown_buffer *ob, const hoedown_buffer *content, const hoedown_renderer_data *data) {
+void md_callbackTable_row(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    const hoedown_renderer_data *data)
+{
     md_parseData* _data = data->opaque;
     hoedown_buffer_put(ob, content->data, content->size);
     hoedown_buffer_puts(ob, "\n");
     _data->rowCellCount = 0;
 }
 
-void md_callbackTable_cell(hoedown_buffer *ob, const hoedown_buffer *content, hoedown_table_flags flags, const hoedown_renderer_data *data) {
+void md_callbackTable_cell(
+    hoedown_buffer *ob,
+    const hoedown_buffer *content,
+    hoedown_table_flags flags,
+    const hoedown_renderer_data *data)
+{
     CORTO_UNUSED(ob);
     CORTO_UNUSED(flags);
     md_parseData* _data = data->opaque;
