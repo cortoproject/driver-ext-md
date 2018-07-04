@@ -1,14 +1,16 @@
-in package driver/ext/md
+in driver.ext.md
 
-string parse(string text)
+parse(string text) string
 
-void parseToCorto(object destination, string text)
+parseToCorto(object destination, string text)
 
-class Doc:/
+class Doc {
     o: object
     level: uint8
     index: uint32, readonly
     niceName: string
     description: string, hidden
     text: string, hidden
-    int16 construct()
+    
+    construct() int16
+}

@@ -1,0 +1,64 @@
+in test
+
+package Package0 {
+    class Class0 {
+        method0()
+        method1()
+    }
+}
+
+package Package1 {
+    package Package0 {
+        package Package0 = {}
+    }
+}
+
+package Package2 {
+    class Class0 {
+        method0()
+    }
+    class Class1 {
+        method0() int
+    }
+}
+
+void docs
+
+test/Suite Headers {
+    tc_H1()
+    tc_H2()
+    tc_H3()
+    tc_H1H2()
+    tc_H1H2H3()
+    tc_H1H2H1()
+    tc_H1H2H3H1H2()
+    tc_H1H3()
+    tc_H1H3H2()
+    tc_H1H2H1H2()
+    tc_H1H3H1H3()
+}
+
+test/Suite HeaderParagraphs {
+    tc_H1P()
+    tc_H1PP()
+    tc_H1PPP()
+    tc_H1PH1P()
+    tc_H1PnH1P()
+    tc_H1PH2P()
+    tc_H1PnH2P()
+    tc_H1PH3P()
+    tc_H1PH2PH3P()
+    tc_H1H2H3P()
+    tc_H1H2H3H4P()
+    tc_H1H4P()
+    tc_H1DP()
+    tc_H1DPP()
+    tc_whitespace()
+}
+
+test/Suite Packages {
+    tc_twoClasses()
+    tc_class()
+    tc_method()
+    tc_nestedPackage()
+}
